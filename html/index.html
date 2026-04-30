@@ -1,13 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KeyFlow</title>
-    <link rel="stylesheet" href="../css/style.css">
-    <script src="../js/script.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>KeyFlow</title>
+  <link rel="stylesheet" href="../css/style.css" />
 </head>
-<body>
-    <h1>This is just a random text</h1>
+<body data-theme="terminal">
+
+  <div id="app">
+
+    <div id="top-bar">
+      <div id="logo">KeyFlow</div>
+      <div id="right-controls">
+        <div id="theme-picker">
+          <button class="theme-dot active" data-theme="terminal"   title="terminal"></button>
+          <button class="theme-dot"        data-theme="monkeytype" title="monkeytype"></button>
+          <button class="theme-dot"        data-theme="superuser"  title="superuser"></button>
+          <button class="theme-dot"        data-theme="gruvbox"    title="gruvbox light"></button>
+        </div>
+        <div id="mode-bar">
+          <button class="mode-btn active" data-time="15">15s</button>
+          <button class="mode-btn"        data-time="30">30s</button>
+          <button class="mode-btn"        data-time="60">60s</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="typing-section">
+
+      <div id="stats-bar">
+        <div class="stat">
+          <div class="stat-val" id="wpm-display">0</div>
+          <div class="stat-label">wpm</div>
+        </div>
+        <div id="timer-display">15</div>
+        <div class="stat">
+          <div class="stat-val" id="acc-display">100%</div>
+          <div class="stat-label">acc</div>
+        </div>
+      </div>
+
+      <div id="progress-wrap">
+        <div id="progress-bar"></div>
+      </div>
+
+      <div id="words-area">
+        <div id="words-inner"></div>
+        <div id="caret"></div>
+      </div>
+
+      <input id="hidden-input" type="text"
+        autocomplete="off"
+        autocorrect="off"
+        autocapitalize="off"
+        spellcheck="false" />
+
+      <div id="controls">
+        <button id="restart-btn">↺ restart</button>
+      </div>
+
+      <p id="hint">click anywhere to start typing</p>
+
+    </div>
+
+    <div id="results">
+      <h2>results</h2>
+      <div id="results-grid">
+        <div class="result-stat">
+          <div class="result-val" id="final-wpm">0</div>
+          <div class="result-label">wpm</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-val" id="final-acc">0%</div>
+          <div class="result-label">accuracy</div>
+        </div>
+        <div class="result-stat">
+          <div class="result-val" id="final-correct">0</div>
+          <div class="result-label">correct</div>
+        </div>
+      </div>
+      <button id="try-again-btn">try again</button>
+    </div>
+
+    <div id="name-overlay">
+      <div id="name-card">
+        <p>what should we call you?</p>
+        <input id="name-input" type="text"
+          placeholder="your name"
+          maxlength="20"
+          autocomplete="off" />
+        <button id="name-submit">let's go →</button>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="js/words.js"></script>
+  <script src="js/typing.js"></script>
+  <script src="js/stats.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/themes.js"></script>
+
 </body>
 </html>
