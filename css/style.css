@@ -1,0 +1,663 @@
+/* ============================================================
+   KeyFlow — style.css
+   Themes: terminal (default) | monkeytype | superuser | gruvbox
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;500;600&family=Lexend:wght@400;500;600&display=swap');
+
+/* ============================================================
+   1. THEME VARIABLES
+   ============================================================ */
+
+body[data-theme="terminal"] {
+  --bg:         #2c2e3b;
+  --surface:    #363848;
+  --surface2:   #404258;
+  --accent:     #4cdbb4;
+  --correct:    #abb2bf;
+  --wrong:      #e06c75;
+  --pending:    #5c6370;
+  --muted:      #4b5263;
+  --success:    #98c379;
+  --text:       #abb2bf;
+
+  --dot-terminal:   #4cdbb4;
+  --dot-monkeytype: #e2b714;
+  --dot-superuser:  #89b4fa;
+  --dot-gruvbox:    #b57614;
+}
+
+body[data-theme="monkeytype"] {
+  --bg:         #1a1a1a;
+  --surface:    #252525;
+  --surface2:   #2e2e2e;
+  --accent:     #e2b714;
+  --correct:    #d1d0c5;
+  --wrong:      #ca4754;
+  --pending:    #646669;
+  --muted:      #3a3a3a;
+  --success:    #e2b714;
+  --text:       #d1d0c5;
+
+  --dot-terminal:   #4cdbb4;
+  --dot-monkeytype: #e2b714;
+  --dot-superuser:  #89b4fa;
+  --dot-gruvbox:    #b57614;
+}
+
+body[data-theme="superuser"] {
+  --bg:         #0a0e14;
+  --surface:    #1e2030;
+  --surface2:   #2a2d45;
+  --accent:     #89b4fa;
+  --correct:    #cdd6f4;
+  --wrong:      #f38ba8;
+  --pending:    #313244;
+  --muted:      #45475a;
+  --success:    #a6e3a1;
+  --text:       #cdd6f4;
+
+  --dot-terminal:   #4cdbb4;
+  --dot-monkeytype: #e2b714;
+  --dot-superuser:  #89b4fa;
+  --dot-gruvbox:    #b57614;
+}
+
+body[data-theme="gruvbox"] {
+  --bg:         #fbf1c7;
+  --surface:    #f2e5bc;
+  --surface2:   #ebdbb2;
+  --accent:     #b57614;
+  --correct:    #3c3836;
+  --wrong:      #cc241d;
+  --pending:    #a89984;
+  --muted:      #bdae93;
+  --success:    #79740e;
+  --text:       #3c3836;
+
+  --dot-terminal:   #4cdbb4;
+  --dot-monkeytype: #e2b714;
+  --dot-superuser:  #89b4fa;
+  --dot-gruvbox:    #b57614;
+}
+
+/* ============================================================
+   2. RESET & BASE
+   ============================================================ */
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'Roboto Mono', monospace;
+  transition: background 0.3s ease, color 0.3s ease;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+button {
+  cursor: pointer;
+  font-family: 'Roboto Mono', monospace;
+}
+
+/* ============================================================
+   3. APP WRAPPER
+   ============================================================ */
+
+#app {
+  width: 100%;
+  max-width: 780px;
+  padding: 32px 28px 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  position: relative;
+  min-height: 100vh;
+  justify-content: center;
+}
+
+/* ============================================================
+   4. TOP BAR
+   ============================================================ */
+
+#top-bar {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+#logo {
+  font-family: 'Lexend', sans-serif;
+  font-size: 22px;
+  font-weight: 600;
+  color: var(--accent);
+  letter-spacing: 1px;
+  transition: color 0.3s;
+  user-select: none;
+}
+
+#right-controls {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* ============================================================
+   5. THEME PICKER
+   ============================================================ */
+
+#theme-picker {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.theme-dot {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  padding: 0;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+  outline: none;
+  position: relative;
+}
+
+.theme-dot:hover {
+  transform: scale(1.25);
+}
+
+.theme-dot.active {
+  border-color: var(--text);
+  transform: scale(1.2);
+  box-shadow: 0 0 0 1px var(--bg);
+}
+
+.theme-dot[data-theme="terminal"]   { background: var(--dot-terminal); }
+.theme-dot[data-theme="monkeytype"] { background: var(--dot-monkeytype); }
+.theme-dot[data-theme="superuser"]  { background: var(--dot-superuser); }
+.theme-dot[data-theme="gruvbox"]    { background: var(--dot-gruvbox); }
+
+/* Tooltip on hover */
+.theme-dot::after {
+  content: attr(title);
+  position: absolute;
+  bottom: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 10px;
+  color: var(--muted);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.15s;
+  font-family: 'Roboto Mono', monospace;
+}
+
+.theme-dot:hover::after {
+  opacity: 1;
+}
+
+/* ============================================================
+   6. MODE BUTTONS (15s / 30s / 60s)
+   ============================================================ */
+
+#mode-bar {
+  display: flex;
+  gap: 4px;
+}
+
+.mode-btn {
+  background: transparent;
+  border: none;
+  color: var(--muted);
+  font-size: 13px;
+  padding: 5px 12px;
+  border-radius: 6px;
+  transition: color 0.15s, background 0.15s;
+  font-weight: 400;
+}
+
+.mode-btn:hover {
+  color: var(--text);
+  background: var(--surface);
+}
+
+.mode-btn.active {
+  color: var(--accent);
+  background: var(--surface);
+}
+
+/* ============================================================
+   7. TYPING SECTION
+   ============================================================ */
+
+#typing-section {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+}
+
+/* ============================================================
+   8. STATS BAR
+   ============================================================ */
+
+#stats-bar {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 48px;
+}
+
+.stat {
+  text-align: center;
+  min-width: 60px;
+}
+
+.stat-val {
+  font-size: 28px;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+  transition: color 0.3s;
+}
+
+.stat-label {
+  font-size: 10px;
+  color: var(--muted);
+  margin-top: 4px;
+  letter-spacing: 1.5px;
+  text-transform: lowercase;
+  transition: color 0.3s;
+}
+
+#timer-display {
+  font-size: 38px;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+  min-width: 60px;
+  text-align: center;
+  transition: color 0.3s;
+}
+
+/* Timer turns red when low */
+#timer-display.low {
+  color: var(--wrong);
+}
+
+/* ============================================================
+   9. PROGRESS BAR
+   ============================================================ */
+
+#progress-wrap {
+  width: 100%;
+  height: 2px;
+  background: var(--surface);
+  border-radius: 2px;
+  overflow: hidden;
+}
+
+#progress-bar {
+  height: 100%;
+  width: 0%;
+  background: var(--accent);
+  border-radius: 2px;
+  transition: width 0.1s linear, background 0.3s;
+}
+
+/* ============================================================
+   10. WORDS AREA  ← most important zone
+   ============================================================ */
+
+#words-area {
+  width: 100%;
+  height: 112px;
+  overflow: hidden;
+  position: relative;
+  cursor: text;
+  user-select: none;
+  font-size: 22px;
+  line-height: 1.8;
+}
+
+#words-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  transition: top 0.15s ease;
+}
+
+/* Individual word */
+/* .word {
+  display: inline-block;
+  margin-right: 12px;
+  position: relative;
+} */
+ 
+ .word {
+  display: inline-block;
+  position: relative;
+  
+  /* REMOVE THIS: */
+  /* margin-right: 12px; */ 
+  
+  /* ADD THIS: */
+  white-space: nowrap; 
+}
+
+/* Individual character */
+.char {
+  display: inline-block;
+  color: var(--pending);
+  transition: color 0.05s;
+  white-space: pre; 
+  vertical-align: top;
+}
+
+.char.correct {
+  color: var(--correct);
+}
+
+.char.wrong {
+  color: var(--wrong);
+}
+
+/* Extra characters typed beyond word length */
+.char.extra {
+  color: var(--wrong);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ============================================================
+   11. CARET
+   ============================================================ */
+
+#caret {
+  position: absolute;
+  width: 2px;
+  height: 1.3em;
+  background: var(--accent);
+  border-radius: 1px;
+  pointer-events: none;
+  transition: left 0.06s ease, top 0.06s ease, background 0.3s;
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%       { opacity: 0; }
+}
+
+/* Stop blinking while typing */
+#caret.typing {
+  animation: none;
+  opacity: 1;
+}
+
+/* ============================================================
+   12. HIDDEN INPUT
+   ============================================================ */
+
+#hidden-input {
+  position: absolute;
+  left: -9999px;
+  top: -9999px;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ============================================================
+   13. CONTROLS & HINT
+   ============================================================ */
+
+#controls {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+}
+
+#restart-btn {
+  background: transparent;
+  border: 1px solid var(--muted);
+  color: var(--muted);
+  font-size: 12px;
+  padding: 6px 18px;
+  border-radius: 6px;
+  letter-spacing: 0.5px;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+#restart-btn:hover {
+  border-color: var(--text);
+  color: var(--text);
+}
+
+#hint {
+  font-size: 11px;
+  color: var(--muted);
+  text-align: center;
+  letter-spacing: 0.5px;
+  transition: opacity 0.3s;
+}
+
+#hint.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* ============================================================
+   14. RESULTS SCREEN
+   ============================================================ */
+
+#results {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  gap: 28px;
+  width: 100%;
+  animation: fadeUp 0.3s ease;
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+#results h2 {
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--muted);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+}
+
+#results-grid {
+  display: flex;
+  gap: 52px;
+  align-items: flex-end;
+}
+
+.result-stat {
+  text-align: center;
+}
+
+.result-val {
+  font-size: 56px;
+  font-weight: 600;
+  color: var(--accent);
+  line-height: 1;
+  transition: color 0.3s;
+}
+
+.result-label {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 6px;
+  letter-spacing: 1.5px;
+}
+
+/* Personal best badge */
+.result-val.best::after {
+  content: ' pb';
+  font-size: 14px;
+  color: var(--success);
+  vertical-align: super;
+}
+
+#try-again-btn {
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px 32px;
+  border-radius: 8px;
+  letter-spacing: 0.5px;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+#try-again-btn:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+#try-again-btn:active {
+  transform: translateY(0);
+}
+
+/* ============================================================
+   15. NAME OVERLAY  (first visit)
+   ============================================================ */
+
+#name-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  backdrop-filter: blur(3px);
+  z-index: 100;
+  animation: fadeIn 0.2s ease;
+}
+
+#name-overlay.hidden {
+  display: none;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+#name-card {
+  background: var(--surface);
+  border: 1px solid var(--surface2);
+  border-radius: 12px;
+  padding: 32px 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  align-items: center;
+  min-width: 280px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.4);
+  transition: background 0.3s;
+  animation: cardIn 0.25s ease;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: scale(0.95) translateY(8px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
+
+#name-card p {
+  color: var(--text);
+  font-size: 14px;
+  text-align: center;
+  letter-spacing: 0.3px;
+}
+
+#name-input {
+  width: 100%;
+  background: var(--bg);
+  border: 1px solid var(--muted);
+  border-radius: 7px;
+  color: var(--text);
+  font-family: 'Roboto Mono', monospace;
+  font-size: 15px;
+  padding: 9px 14px;
+  outline: none;
+  text-align: center;
+  transition: border-color 0.15s;
+}
+
+#name-input:focus {
+  border-color: var(--accent);
+}
+
+#name-input::placeholder {
+  color: var(--muted);
+}
+
+#name-submit {
+  width: 100%;
+  background: var(--accent);
+  color: var(--bg);
+  border: none;
+  border-radius: 7px;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 10px;
+  letter-spacing: 0.5px;
+  transition: opacity 0.15s, transform 0.1s;
+}
+
+#name-submit:hover {
+  opacity: 0.85;
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   16. SCROLLBAR  (minimal)
+   ============================================================ */
+
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--muted); border-radius: 2px; }
+
+/* ============================================================
+   17. RESPONSIVE
+   ============================================================ */
+
+@media (max-width: 600px) {
+  #app { padding: 20px 16px; }
+  #words-area { font-size: 18px; height: 100px; }
+  .result-val { font-size: 40px; }
+  #results-grid { gap: 28px; }
+  #stats-bar { gap: 24px; }
+  #timer-display { font-size: 30px; }
+  .stat-val { font-size: 22px; }
+  #logo { font-size: 18px; }
+}
