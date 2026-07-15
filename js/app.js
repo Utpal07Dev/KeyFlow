@@ -142,6 +142,7 @@ modeBtns.forEach(btn => {
   btn.addEventListener('click', () => {
     // update active class
     modeBtns.forEach(b => b.classList.remove('active'));
+
     btn.classList.add('active');
 
     // update timeLimit in stats.js (shared global)
@@ -158,12 +159,12 @@ modeBtns.forEach(btn => {
 //  this handles it when input is not focused)
 // ============================================================
 
-document.addEventListener('keydown', (e) => {
-  if (e.key === 'Tab') {
-    e.preventDefault();
-    resetGame();
-  }
-});
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      resetGame();
+    }
+  });
 
 // ============================================================
 // 10. START
