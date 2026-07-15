@@ -509,7 +509,7 @@ button {
 
 /* Personal best badge */
 .result-val.best::after {
-  content: ' pb';
+  content: 'pb';
   font-size: 14px;
   color: var(--success);
   vertical-align: super;
